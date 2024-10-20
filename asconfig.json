@@ -1,0 +1,26 @@
+{
+	"compilerOptions": {
+		"source-path": [
+			"."
+		],
+		"default-frame-rate": 30,
+		"default-background-color": "#FFFFFF",
+		"default-size": {
+			"width": 800,
+			"height": 600
+		},
+		"target-player": "21.0",
+		"accessible": false,
+		"advanced-telemetry": false,
+		"benchmark": false,
+		"optimize": true,
+		"omit-trace-statements": true,
+		"show-unused-type-selector-warnings": true,
+		"strict": true,
+		"use-network": true,
+		"use-resource-bundle-metadata": true,
+		"warnings": true,
+		"verbose-stacktraces": false,
+		"static-link-runtime-shared-libraries": true
+	}
+}
