@@ -40,6 +40,30 @@ package bvn.sprite
 		{
 			return _i;
 		}
+
+		/**
+		 * 获取该控制器所包装的原游戏对象本体的更新列表（游戏对象列表）中的索引。正常情况下应该都不会用到……
+		 */
+		public function getRenderIndex():int
+		{
+			return GameSpriteUtils.getRenderIndex(_i);
+		}
+
+		/**
+		 * 判断自己在更新列表（游戏对象列表）中的索引是否为列表的第一个。正常情况下应该都不会用到……
+		 */
+		public function isFirstIndex():Boolean
+		{
+			return getRenderIndex() == 0;
+		}
+		
+		/**
+		 * 判断自己在更新列表（游戏对象列表）中的索引是否为列表的最后一个。正常情况下应该都不会用到……
+		 */
+		public function isLastIndex():Boolean
+		{
+			return getRenderIndex() == GameSpriteUtils.gameSprites.length - 1;
+		}
 		
 		/**
 		 * 设置自己在更新列表（游戏对象列表）中的索引到列表的最前面，或是某个游戏对象的前面。正常情况下应该都不会用到……
