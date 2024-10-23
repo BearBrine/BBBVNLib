@@ -1,6 +1,10 @@
-package bvn.math
+﻿package bvn.math
 {
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
+
+	import flash.display.DisplayObject;
+	import flash.geom.Matrix;
 	
 	/**
 	 * bb的常用数学相关方法
@@ -69,7 +73,57 @@ package bvn.math
 			throw new Error("Weight array is end.");
 			return null;
 		}
-	
+
+		/**
+		 * 检测两个凸多边形是否相交，即是否发生碰撞
+		 * 多边形可以是包含点集（Point）的 Array，也可以是 Rectangle，也可以是支持旋转的矩形 DisplayObject
+		 * 对于 DisplayObject，会将矩形的旋转角度临时设置为 0 后再恢复以方便检测
+		 * 目前只支持凸多边形检测，不支持凹多边形
+		 * 
+		 * @param	poly1	多边形1
+		 * @param	poly2	多边形2
+		 * @return	如果相交返回 true，否则返回 false
+		 */
+		public static function polygonCollide(poly1, poly2) 
+		{
+			function transType(poly):Array
+			{
+				if (poly is Array) {
+					return poly;
+				}
+				var points:Array;
+				
+				if (poly is Rectangle) {
+					points = [
+						new Point(poly.x, poly.y),
+						new Point(poly.x + poly.width, poly.y),
+						new Point(poly.x + poly.width, poly.y + poly.height),
+						new Point(poly.x, poly.y + poly.height)
+					];
+				}
+				else if (poly is DisplayObject) {
+					var matrix: Matrix = poly.transform.matrix;
+					
+					var rectRotation: Number = poly.rotation;
+					poly.rotation = 0;
+					
+					var halfWidth: Number = poly.width / 2;
+					var halfHeight: Number = poly.height / 2;
+					
+					poly.rotation = rectRotation;
+
+					points = [
+						matrix.transformPoint(new Point(-halfWidth, -halfHeight)),
+						matrix.transformPoint(new Point(halfWidth, -halfHeight)),
+						matrix.transformPoint(new Point(halfWidth, halfHeight)),
+						matrix.transformPoint(new Point(-halfWidth, halfHeight))
+					];
+				}
+				return points;
+			}
+			return SATCollision.collide(transType(poly1), transType(poly2));
+		}
+		
 	}
 
 }
