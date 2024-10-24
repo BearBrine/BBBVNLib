@@ -4,6 +4,7 @@
 	import flash.geom.Rectangle;
 
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.geom.Matrix;
 	
 	/**
@@ -76,13 +77,19 @@
 
 		/**
 		 * 检测两个凸多边形是否相交，即是否发生碰撞
+		 * 该方法使用分离轴定理来检测碰撞（使用 SATCollision 类中的实现）
 		 * 多边形可以是包含点集（Point）的 Array，也可以是 Rectangle，也可以是支持旋转的矩形 DisplayObject
+		 * 如果要检测的 DisplayObject 对象和另一个多边形不在同一层级，则可能需要 getRectPointsOfDisplay 方法
 		 * 对于 DisplayObject，会将矩形的旋转角度临时设置为 0 后再恢复以方便检测
 		 * 目前只支持凸多边形检测，不支持凹多边形
 		 * 
 		 * @param	poly1	多边形1
 		 * @param	poly2	多边形2
 		 * @return	如果相交返回 true，否则返回 false
+		 * @throws	如果传入的参数不是 Array、Rectangle 或 DisplayObject 则抛出异常
+		 * @see #getRectPointsOfDisplay
+		 * @see SATCollision
+		 * @see SATCollision#collide
 		 */
 		public static function polygonCollide(poly1, poly2) 
 		{
@@ -102,26 +109,51 @@
 					];
 				}
 				else if (poly is DisplayObject) {
-					var matrix: Matrix = poly.transform.matrix;
-					
-					var rectRotation: Number = poly.rotation;
-					poly.rotation = 0;
-					
-					var halfWidth: Number = poly.width / 2;
-					var halfHeight: Number = poly.height / 2;
-					
-					poly.rotation = rectRotation;
-
-					points = [
-						matrix.transformPoint(new Point(-halfWidth, -halfHeight)),
-						matrix.transformPoint(new Point(halfWidth, -halfHeight)),
-						matrix.transformPoint(new Point(halfWidth, halfHeight)),
-						matrix.transformPoint(new Point(-halfWidth, halfHeight))
-					];
+					points = getRectPointsOfDisplay(poly);
+				}
+				else {
+					throw new Error("无法识别的多边形类型！");
 				}
 				return points;
 			}
 			return SATCollision.collide(transType(poly1), transType(poly2));
+		}
+
+		/**
+		 * 获取一个 DisplayObject 的矩形顶点坐标数组，可以指定相对于某个包含自身的对象以获取相对的坐标
+		 * 用于和一些不在同一层级的多边形检测碰撞而提供正确的坐标数组
+		 * @param	obj		目标对象
+		 * @param	container	如果 container 不为空且 obj 不为 container 的子项，则会抛出错误，默认为 null
+		 * @return	返回一个 Array，数组中包含四个 Point 对象，依次为左上、右上、左下、右下四个顶点坐标
+		 * @throws	如果传入的参数不是 DisplayObject 则抛出异常
+		 * @see #polygonCollide
+		 */
+		public static function getRectPointsOfDisplay(obj:DisplayObject, container:DisplayObjectContainer = null):Array
+		{
+			if (container != null && !container.contains(obj)) {
+				throw new Error("obj 不为 container 的子项！");
+			}
+			var matrix: Matrix = obj.transform.matrix.clone();
+			obj.transform.matrix = new Matrix();
+			
+			var rect: Rectangle = obj.getBounds(obj);
+			
+			obj.transform.matrix = matrix.clone();
+			if (container != null) {
+				for (var parent: DisplayObjectContainer = obj.parent; ; parent = parent.parent) {
+					matrix.concat(parent.transform.matrix);
+					if (parent == container) {
+						break;
+					}
+				}
+			}
+
+			return [
+				matrix.transformPoint(new Point(rect.x, rect.y)),
+				matrix.transformPoint(new Point(rect.x + rect.width, rect.y)),
+				matrix.transformPoint(new Point(rect.x, rect.y + rect.height)),
+				matrix.transformPoint(new Point(rect.x + rect.width, rect.y + rect.height))
+			];
 		}
 		
 	}
