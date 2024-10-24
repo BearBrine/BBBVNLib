@@ -1,2 +1,4 @@
 asdoc-output
+bin
+settings.json
 *.zip

@@ -140,7 +140,7 @@
 			
 			obj.transform.matrix = matrix.clone();
 			if (container != null) {
-				for (var parent: DisplayObjectContainer = obj.parent; ; parent = parent.parent) {
+				for (var parent: DisplayObjectContainer = obj.parent; true; parent = parent.parent) {
 					matrix.concat(parent.transform.matrix);
 					if (parent == container) {
 						break;
