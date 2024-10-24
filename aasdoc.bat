@@ -17,6 +17,7 @@ rem asdoc.exe use air-config.xml instead of flex-config.xml.
 rem On Unix, aasdoc is used instead.
 rem
 
-"D:\Program\Adobe\Adobe Flash Builder 4.7 (64 Bit)\sdks\4.6.0\bin\asdoc.exe" +configname=air %*
+"D:\Program\Flash\Adobe Flash Builder 4.7 (64 Bit)\sdks\4.6.0\bin\asdoc.exe" -help list
+"D:\Program\Flash\Adobe Flash Builder 4.7 (64 Bit)\sdks\4.6.0\bin\asdoc.exe" +configname=air %* -doc-sources bvn -strict=false
 
 pause
