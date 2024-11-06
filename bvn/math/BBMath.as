@@ -134,11 +134,14 @@
 				throw new Error("obj 不为 container 的子项！");
 			}
 			var matrix: Matrix = obj.transform.matrix.clone();
-			obj.transform.matrix = new Matrix();
+			var scale:Point = new Point(obj.scaleX, obj.scaleY);
+			obj.transform.matrix.identity();
 			
 			var rect: Rectangle = obj.getBounds(obj);
-			
-			obj.transform.matrix = matrix.clone();
+
+			var scaleMatrix:Matrix = new Matrix();
+			scaleMatrix.scale(scale.x, scale.y);
+			obj.transform.matrix.concat(scaleMatrix);
 			if (container != null) {
 				for (var parent: DisplayObjectContainer = obj.parent; true; parent = parent.parent) {
 					matrix.concat(parent.transform.matrix);
