@@ -9,16 +9,18 @@ package bvn.math.pbd
         private var particle2:IPBDParticle;
 
         private var _distance:Number;
-        private var _stiffness:Number;
+        private var _flexibility:Number;
         private var _fixed_target1:Boolean;
 
-        public function PBDDistanceConstraint(target1:*, target2:*, distance:Number, stiffness:Number = 1, fixed_target1:Boolean = false)
+        private var _lambda:Number = 0;
+
+        public function PBDDistanceConstraint(target1:*, target2:*, distance:Number, fixed_target1:Boolean = false, flexibility:Number = 0.2)
         {
             _target1 = target1;
             _target2 = target2;
             _distance = distance;
-            _stiffness = stiffness;
             _fixed_target1 = fixed_target1;
+            _flexibility = flexibility;
         }
 
         public function getTargets():Array
@@ -38,19 +40,58 @@ package bvn.math.pbd
             var dy:Number = particle2.predY - particle1.predY;
 
             var distance:Number = Math.sqrt(dx * dx + dy * dy);
-            if (distance != 0) {
-                var diff:Number = distance - _distance;
-                var correction:Number = diff / distance;
-                if (_fixed_target1 == true) {
-                    particle2.predX -= dx * correction * _stiffness;
-                    particle2.predY -= dy * correction * _stiffness;
+            if (distance == 0) {
+                if (_distance == 0) {
+                    return;
                 }
-                else {
-                    particle1.predX += dx * correction * 0.5 * _stiffness;
-                    particle1.predY += dy * correction * 0.5 * _stiffness;
-                    particle2.predX -= dx * correction * 0.5 * _stiffness;
-                    particle2.predY -= dy * correction * 0.5 * _stiffness;
+                distance = Math.min(_distance, 0.00001);
+                dx = distance;
+            }
+            var diff:Number = distance - _distance;
+            var correction:Number = diff / distance;
+            if (_fixed_target1 == true) {
+                particle2.predX -= dx * correction;
+                particle2.predY -= dy * correction;
+            }
+            else {
+                particle1.predX += dx * correction * 0.5;
+                particle1.predY += dy * correction * 0.5;
+                particle2.predX -= dx * correction * 0.5;
+                particle2.predY -= dy * correction * 0.5;
+            }
+        }
+
+        public function clearLambda():void
+        {
+            _lambda = 0;
+        }
+
+        public function projectX(timeStep:Number):void
+        {
+            var dx:Number = particle2.predX - particle1.predX;
+            var dy:Number = particle2.predY - particle1.predY;
+
+            var distance:Number = Math.sqrt(dx * dx + dy * dy);
+            if (distance == 0) {
+                if (_distance == 0) {
+                    return;
                 }
+                distance = Math.min(_distance, 0.00001);
+                dx = distance;
+            }
+            var diff:Number = distance - _distance;
+            var alpha:Number = _flexibility / (timeStep * timeStep);
+            _lambda -= (diff + alpha * _lambda) / (1 + alpha);
+            var correction:Number = -_lambda / distance;
+            if (_fixed_target1 == true) {
+                particle2.predX -= dx * correction;
+                particle2.predY -= dy * correction;
+            }
+            else {
+                particle1.predX += dx * correction * 0.5;
+                particle1.predY += dy * correction * 0.5;
+                particle2.predX -= dx * correction * 0.5;
+                particle2.predY -= dy * correction * 0.5;
             }
         }
     }

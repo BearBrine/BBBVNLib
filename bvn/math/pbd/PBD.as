@@ -1,5 +1,6 @@
 package bvn.math.pbd {
     import flash.utils.Dictionary;
+    import flash.geom.Point;
 
     public class PBD {
         private var _constraints:Vector.<IPBDConstraint>;
@@ -9,8 +10,8 @@ package bvn.math.pbd {
         private var _delta:Number;
         private var _iterations:int;
 
-        public function PBD(delta:Number, constraints:Vector.<IPBDConstraint> = null, iterations:int = 20) {
-            _delta = delta;
+        public function PBD(timeStep:Number, constraints:Vector.<IPBDConstraint> = null, iterations:int = 20) {
+            _delta = timeStep;
             _iterations = iterations;
 
             _constraints = new Vector.<IPBDConstraint>();
@@ -21,11 +22,11 @@ package bvn.math.pbd {
             }
         }
 
-        public function get delta():Number {
+        public function get timeStep():Number {
             return _delta;
         }
 
-        public function set delta(value:Number):void {
+        public function set timeStep(value:Number):void {
             _delta = value;
         }
 
@@ -120,6 +121,31 @@ package bvn.math.pbd {
             for (var i:int = 0; i < _iterations; i++) {
                 for each (var constraint:IPBDConstraint in _constraints) {
                     constraint.project();
+                }
+            }
+            for each (particle in _particles) {
+                particle.velocity.x = (particle.predX - particle.x) / _delta;
+                particle.velocity.y = (particle.predY - particle.y) / _delta;
+            }
+        }
+
+        public function updateX():void {
+            for each (var constraint:IPBDConstraint in _constraints) {
+                if (!constraint["clearLambda"]) {
+                    throw new Error("约束不支持XPBD更新");
+                }
+                constraint["clearLambda"]();
+            }
+            for each (var particle:IPBDParticle in _particles) {
+                particle.predX = particle.x + particle.velocity.x * _delta;
+                particle.predY = particle.y + particle.velocity.y * _delta;
+            }
+            for (var i:int = 0; i < _iterations; i++) {
+                for each (constraint in _constraints) {
+                    if (!constraint["projectX"]) {
+                        throw new Error("约束不支持XPBD更新");
+                    }
+                    constraint["projectX"](_delta);
                 }
             }
             for each (particle in _particles) {
