@@ -1,5 +1,9 @@
 package bvn.math.pbd
 {
+    /**
+     * 距离约束，用于固定两个对象之间的距离，支持XPBD算法
+     * @author BearBrine
+     */
     public class PBDDistanceConstraint implements IPBDConstraint
     {
         private var _target1:*;

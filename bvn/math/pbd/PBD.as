@@ -2,6 +2,11 @@ package bvn.math.pbd {
     import flash.utils.Dictionary;
     import flash.geom.Point;
 
+    /**
+     * PBD物理模拟算法，用于模拟一些物理效果（如绳索）。
+     * 被模拟的物理对象必须是 IPBDParticle 接口的实现类，或者是支持被封装的类（目前有 BaseGameSprite 及其子类和 Bullet）。
+     * @author BearBrine
+     */
     public class PBD {
         private var _constraints:Vector.<IPBDConstraint>;
         private var _particles:Dictionary;
