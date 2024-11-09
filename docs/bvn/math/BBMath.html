@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><!-- saved from url=(0014)about:internet --><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../override.css" type="text/css"><meta name="keywords" content="BBMath,bvn.math.BBMath,collide,dist,getRectPointsOfDisplay,polygonCollide,randomSwitch"><title>bvn.math.BBMath</title></head><body><script language="javascript" type="text/javascript" src="../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../help.js"></script><script language="javascript" type="text/javascript" src="../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+				asdocTitle = 'BBMath - API Documentation';
+				var baseRef = '../../';
+				window.onload = configPage;
+			--></script>
+<script type="text/javascript">
+			scrollToNameAnchor();
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">API Documentation</td><td class="titleTableTopNav" align="right"><a href="../../package-summary.html" onclick="loadClassListFrame('../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../class-summary.html" onclick="loadClassListFrame('../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../all-index-A.html" onclick="loadClassListFrame('../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../index.html?bvn/math/BBMath.html&amp;bvn/math/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">BBMath</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#methodSummary">Methods</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+				<!--
+				
+					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("BBMath"); titleBar_setSubNav(false,false,false,false,false,false,false,false,true,false,false	,false,false,false,false,false);}	
+				-->
+			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">bvn.math</a></td></tr><tr><td class="classHeaderTableLabel">Class</td><td class="classSignature">public  class  BBMath</td></tr><tr><td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">BBMath  <img src="../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> Object</td></tr></table><p></p><p></p><p></p>
+	 bb的常用数学相关方法
+	 <p></p><br/><hr></div><a name="methodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Methods </div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#dist()" class="signatureLink">dist</a>(... args):Number</div><div class="summaryTableDescription">[static] 
+		 计算两点之间的距离
+		 </div></td><td class="summaryTableOwnerCol">BBMath</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getRectPointsOfDisplay()" class="signatureLink">getRectPointsOfDisplay</a>(obj:DisplayObject, container:DisplayObjectContainer = null):Array</div><div class="summaryTableDescription">[static] 
+		 获取一个 DisplayObject 的矩形顶点坐标数组，可以指定相对于某个包含自身的对象以获取相对的坐标
+		 用于和一些不在同一层级的多边形检测碰撞而提供正确的坐标数组
+		 </div></td><td class="summaryTableOwnerCol">BBMath</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#polygonCollide()" class="signatureLink">polygonCollide</a>(poly1:*, poly2:*):*</div><div class="summaryTableDescription">[static] 
+		 检测两个凸多边形是否相交，即是否发生碰撞
+		 该方法使用分离轴定理来检测碰撞（使用 SATCollision 类中的实现）
+		 多边形可以是包含点集（Point）的 Array，也可以是 Rectangle，也可以是支持旋转的矩形 DisplayObject
+		 如果要检测的 DisplayObject 对象和另一个多边形不在同一层级，则可能需要 getRectPointsOfDisplay 方法
+		 对于 DisplayObject，会将矩形的旋转角度临时设置为 0 后再恢复以方便检测
+		 目前只支持凸多边形检测，不支持凹多边形
+		 
+		 </div></td><td class="summaryTableOwnerCol">BBMath</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#randomSwitch()" class="signatureLink">randomSwitch</a>(arr:Array, weightArr:Array = null):*</div><div class="summaryTableDescription">[static] 
+		 从数组中随机选取一个对象并返回该对象
+		 </div></td><td class="summaryTableOwnerCol">BBMath</td></tr></table></div><script language="javascript" type="text/javascript"><!--
+										showHideInherited();
+										--></script><div class="MainContent"><a name="methodDetail"></a><div class="detailSectionHeader">Method Detail</div><a name="dist()"></a><a name="dist(restParam)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">dist</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td></tr></table><div class="detailBody"><code> public static function dist(... args):Number</code><p></p><p></p><p>
+		 计算两点之间的距离
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code>... <span class="label">args</span></code> &mdash; args	格式为 (x1, y1, x2, y2) 或 (position1, position2)
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Number</code> &mdash; 当然是距离的计算结果啦~
+		 </td></tr></table></div><a name="getRectPointsOfDisplay()"></a><a name="getRectPointsOfDisplay(flash.display.DisplayObject,flash.display.DisplayObjectContainer)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getRectPointsOfDisplay</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function getRectPointsOfDisplay(obj:DisplayObject, container:DisplayObjectContainer = null):Array</code><p></p><p></p><p>
+		 获取一个 DisplayObject 的矩形顶点坐标数组，可以指定相对于某个包含自身的对象以获取相对的坐标
+		 用于和一些不在同一层级的多边形检测碰撞而提供正确的坐标数组
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">obj</span>:DisplayObject</code> &mdash; 	目标对象
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">container</span>:DisplayObjectContainer</code> (default = <code>null</code>)<code></code> &mdash; 如果 container 不为空且 obj 不为 container 的子项，则会抛出错误，默认为 null
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Array</code> &mdash; 返回一个 Array，数组中包含四个 Point 对象，依次为左上、右上、左下、右下四个顶点坐标
+		 </td></tr></table><br/><span class="label">Throws</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>如果传入的参数不是 </code> &mdash; DisplayObject 则抛出异常
+		 </td></tr></table><p><span class="label">See also</span></p><div class="seeAlso"><a href="BBMath.html#polygonCollide" target="">polygonCollide</a></div></div><a name="polygonCollide()"></a><a name="polygonCollide(any,any)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">polygonCollide</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function polygonCollide(poly1:*, poly2:*):*</code><p></p><p></p><p>
+		 检测两个凸多边形是否相交，即是否发生碰撞
+		 该方法使用分离轴定理来检测碰撞（使用 SATCollision 类中的实现）
+		 多边形可以是包含点集（Point）的 Array，也可以是 Rectangle，也可以是支持旋转的矩形 DisplayObject
+		 如果要检测的 DisplayObject 对象和另一个多边形不在同一层级，则可能需要 getRectPointsOfDisplay 方法
+		 对于 DisplayObject，会将矩形的旋转角度临时设置为 0 后再恢复以方便检测
+		 目前只支持凸多边形检测，不支持凹多边形
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">poly1</span>:*</code> &mdash; 多边形1
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">poly2</span>:*</code> &mdash; 多边形2
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>*</code> &mdash; 如果相交返回 true，否则返回 false
+		 </td></tr></table><br/><span class="label">Throws</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>如果传入的参数不是 </code> &mdash; Array、Rectangle 或 DisplayObject 则抛出异常
+		 </td></tr></table><p><span class="label">See also</span></p><div class="seeAlso"><a href="BBMath.html#getRectPointsOfDisplay" target="">getRectPointsOfDisplay</a><br/><a href="SATCollision.html" target="">SATCollision</a><br/><a href="SATCollision.html#collide" target="">SATCollision.collide</a></div></div><a name="randomSwitch()"></a><a name="randomSwitch(Array,Array)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">randomSwitch</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function randomSwitch(arr:Array, weightArr:Array = null):*</code><p></p><p></p><p>
+		 从数组中随机选取一个对象并返回该对象
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">arr</span>:Array</code> &mdash; 		目标数组
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">weightArr</span>:Array</code> (default = <code>null</code>)<code></code> &mdash; 数组中每一项的权值，权值越高被选中的概率越大，该数组长度必须和目标数组一致，默认设置为 null 选取到每一项的概率一致
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>*</code> &mdash; 随机选取出的对象
+		 </td></tr></table></div><br/><br/><hr><br/><p></p><center class="copyright"><footer></footer><br/>Sat Nov 9 2024, 02:26 PM +08:00  </center></div></body></html><!--<br/>Sat Nov 9 2024, 02:26 PM +08:00  -->

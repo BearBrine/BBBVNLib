@@ -18,6 +18,6 @@ rem On Unix, aasdoc is used instead.
 rem
 
 "D:\Program\Flash\Adobe Flash Builder 4.7 (64 Bit)\sdks\4.6.0\bin\asdoc.exe" -help list
-"D:\Program\Flash\Adobe Flash Builder 4.7 (64 Bit)\sdks\4.6.0\bin\asdoc.exe" +configname=air %* -doc-sources bvn -strict=false
+"D:\Program\Flash\Adobe Flash Builder 4.7 (64 Bit)\sdks\4.6.0\bin\asdoc.exe" +configname=air %* -doc-sources bvn -output docs -strict=false
 
 pause
